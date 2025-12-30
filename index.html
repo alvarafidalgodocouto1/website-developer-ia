@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gerador de Sites com IA</title>
+</head>
+<body>
+  <h1>Criar Website com IA</h1>
+  <form id="siteForm">
+    <input placeholder="Nome da empresa" id="nome" required />
+    <input placeholder="Tipo de negócio" id="tipo" required />
+    <input placeholder="Cidade" id="cidade" required />
+    <textarea placeholder="Serviços" id="servicos"></textarea>
+    <button type="submit">Gerar Site</button>
+  </form>
+
+  <pre id="resultado"></pre>
+
+  <script>
+    document.getElementById("siteForm").onsubmit = async (e) => {
+      e.preventDefault();
+      const data = {
+        nome: nome.value,
+        tipo: tipo.value,
+        cidade: cidade.value,
+        servicos: servicos.value
+      };
+
+      const res = await fetch("http://localhost:8000/criar-site", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const json = await res.json();
+      resultado.textContent = json.html;
+    }
+  </script>
+</body>
+</html>
